@@ -9,6 +9,7 @@ jobs:
   test:
     uses: ./.github/workflows/django-test.yaml
   deploy:
+    needs: test
     name: Test, Build, Deploy
     runs-on: ubuntu-latest
     permissions:
