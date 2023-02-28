@@ -1,0 +1,53 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: check-yaml
+        exclude: ^static/
+      - id: check-json
+        exclude: ^static/
+      - id: trailing-whitespace
+        exclude: ^static/
+      - id: double-quote-string-fixer
+        exclude: ^.*\b(migrations)\b.*$
+      - id: debug-statements
+
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.9.2
+    hooks:
+      - id: flake8
+        additional_dependencies: ["flake8-bandit", "flake8-bugbear"]
+        exclude: ^.*\b(migrations)\b.*$
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.9.3
+    hooks:
+      - id: isort
+        args: ["--profile", "black", "--filter-files"]
+        exclude: ^.*\b(migrations)\b.*$
+
+  - repo: https://github.com/psf/black
+    rev: 22.3.0
+    hooks:
+      - id: black
+        language_version: python3
+        exclude: ^.*\b(migrations)\b.*$
+
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.23.1
+    hooks:
+      - id: pyupgrade
+
+  - repo: https://github.com/myint/autoflake
+    rev: v1.4
+    hooks:
+      - id: autoflake
+        args:
+          - --in-place
+          - --remove-unused-variables
+          - --remove-all-unused-imports
+
+  - repo: https://github.com/pre-commit/mirrors-autopep8
+    rev: v1.4
+    hooks:
+    -   id: autopep8

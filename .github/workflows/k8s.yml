@@ -1,0 +1,27 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: ["Django Test Coverage"]
+    types:
+      - completed
+  push:
+    tags:
+      - '*'
+
+jobs:
+  deploy:
+    name: Test, Build, Deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.11'
+    - name: Install Dependencies
+      run: |
+        echo "Deploying!!!!!!!"

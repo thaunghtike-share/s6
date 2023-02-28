@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+export WORKING_DIR=$PWD
+
+export BASEDIR=$(dirname "$0")
+cd ${BASEDIR}
+
+export POSTGRES_HOST=0.0.0.0
+export REDIS_URL=redis://cache:6379/1
+export BRAND=opszero
+
+poetry run ./manage.py "$@"

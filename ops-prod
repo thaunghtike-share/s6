@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+export WORKING_DIR=$PWD
+
+export BASEDIR=$(dirname "$0")
+cd ${BASEDIR}
+
+# echo $BASEDIR
+# echo $WORKING_DIR
+
+# Secrets from the Kubernetes Cluster
+eval $(kubectl get secrets opszero -o json | jq -r '.data | to_entries[] | "export \(.key)=$(echo \(.value) | base64 -d)"')
+export POSTGRES_HOST=0.0.0.0
+export POSTGRES_PORT=5431
+
+nohup kubectl port-forward deployments/rds-forwarder 5431:5432 &
+
+poetry run ./manage.py "$@"
